@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ResearchBase</name>
+    </assembly>
+    <members>
+        <member name="M:ResearchBase.Lab1.Run">
+            <summary>
+            done tasks from lab 1
+            </summary>
+        </member>
+        <member name="T:ResearchBase.Paper">
+            <summary>
+            Paper, with fields title, author and date of publication
+            </summary>
+        </member>
+        <member name="M:ResearchBase.Paper.#ctor(System.String,ResearchBase.Person,System.DateTime)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="_title">title of paper</param>
+            <param name="_author">author of paper</param>
+            <param name="_publicationDate">date of publication of paper</param>
+        </member>
+        <member name="M:ResearchBase.Paper.#ctor">
+            <summary>
+            default constructor Paper("Title", new Person(), DateTime.MinValue)
+            </summary>
+        </member>
+        <member name="M:ResearchBase.Paper.ToString">
+            <summary>
+            convert fields of paper in string
+            </summary>
+            <returns>string with title, author and date of publication</returns>
+        </member>
+        <member name="T:ResearchBase.Person">
+            <summary>
+            Person, with fields name, surname and birthdate
+            </summary>
+        </member>
+        <member name="M:ResearchBase.Person.#ctor(System.String,System.String,System.DateTime)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="_name">name of person</param>
+            <param name="_surname">surname of person</param>
+            <param name="_birthdate">birthdate of person</param>
+            <remarks>if birthdate not in (DateTime.MinValue; DateTime.Now] than set DateTime.MinValue </remarks>
+        </member>
+        <member name="M:ResearchBase.Person.#ctor">
+            <summary>
+            default constructor Person("Name","Surname",DateTime.MinValue)
+            </summary>
+        </member>
+        <member name="P:ResearchBase.Person.Name">
+            <value>get/set name</value>
+        </member>
+        <member name="P:ResearchBase.Person.Surname">
+            <value>get/set surname</value>
+        </member>
+        <member name="P:ResearchBase.Person.Birthdate">
+            <value>get/set birthdate</value>
+            <remarks>set only if in (DateTime.MinValue; DateTime.Now] </remarks>
+        </member>
+        <member name="P:ResearchBase.Person.BirthdayYear">
+            <value>get/set birthyear</value>
+        </member>
+        <member name="M:ResearchBase.Person.ToString">
+            <summary>
+            convert fields of person in string
+            </summary>
+            <returns>string with name, surname and birthdate </returns>
+        </member>
+        <member name="M:ResearchBase.Person.ToShortString">
+            <summary>
+            convert some fields of person in string
+            </summary>
+            <returns>string with name and surname</returns>
+        </member>
+        <member name="T:ResearchBase.ResearchTeam">
+            <summary>
+            Research team
+            </summary>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.#ctor(System.String,System.String,System.Int32,ResearchBase.TimeFrame)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="_theme">theme of research</param>
+            <param name="_company">reseacher company</param>
+            <param name="_registerNumber">number of register</param>
+            <param name="_timeFrame">time frame of research</param>
+            <remarks>if _registerNumber not in (100000;999999] than set 100000</remarks>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.#ctor">
+            <summary>
+            default constructor ResearchTeam("theme", "company", 1000000, TimeFrame.Year)
+            </summary>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.Theme">
+            <value>get/set theme of research</value>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.Company">
+            <value>get/set researcher company</value>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.RegisterNumber">
+            <value>get/set theme of research</value>
+            <remarks>set only if in (100000;999999] </remarks>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.TimeFrame">
+            <value>get/set time frame of research</value>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.Papers">
+            <value>get/set papers</value>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.LastPaper">
+            <value>get paper with last publication date</value>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.Item(ResearchBase.TimeFrame)">
+            <summary>
+            indexator by TimeFrame
+            </summary>
+            <param name="index">current timeframe index</param>
+            <returns>return true if timeframe == index</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.AddPapers(ResearchBase.Paper[])">
+            <summary>
+            add some papers to current papers
+            </summary>
+            <param name="addPapers">papers that added</param>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.ToString">
+            <summary>
+            convert fields of research team in string
+            </summary>
+            <returns>string with theme, company, register number, timeframe and papers</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.ToShortString">
+            <summary>
+            convert some fields of research team in string
+            </summary>
+            <returns>string with theme, company, register number and time frame</returns>
+        </member>
+    </members>
+</doc>
