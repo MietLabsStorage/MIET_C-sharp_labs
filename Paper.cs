@@ -7,8 +7,11 @@ namespace ResearchBase
     /// </summary>
     class Paper
     {
+        /// <value>get/set title</value>
         public string Title { get; set; }
+        /// <value>get/set author</value>
         public Person Author { get; set; }
+        /// <value>get/set date of publication</value>
         public DateTime PublicationDate { get; set; }
 
         /// <summary>
@@ -42,5 +45,15 @@ namespace ResearchBase
         {
             return Title + " /author:" + Author.ToString() + "/ " + PublicationDate.ToShortDateString();
         }
+
+        /// <summary>
+        /// Copy by value
+        /// </summary>
+        /// <returns>object with common fields as this</returns>
+        public virtual object DeepCopy()
+        {
+            return new Paper(Title, (Person)Author.DeepCopy() ,PublicationDate);
+        }
+
     }
 }

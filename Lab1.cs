@@ -13,7 +13,7 @@ namespace ResearchBase
             //task 1
             //Создать один объект типа ResearchTeam, преобразовать данные в
             //текстовый вид с помощью метода ToShortString() и вывести данные
-            ResearchTeam researchTeam = new ResearchTeam("C#", "PIN-24", 100000, TimeFrame.Long);
+            ResearchTeam researchTeam = new ResearchTeam("C#", new Team("PIN-24", 100000), TimeFrame.Long);
             Console.WriteLine(researchTeam.ToShortString());
 
 
@@ -29,7 +29,7 @@ namespace ResearchBase
             //преобразовать данные в текстовый вид с помощью метода ToString() и
             //вывести данные.
             researchTeam.Theme = ".NET";
-            researchTeam.Company = "MP-25A";
+            researchTeam.Name = "MP-25A";
             researchTeam.RegisterNumber = 999999;
             researchTeam.TimeFrame = TimeFrame.TwoYears;
             Console.WriteLine(researchTeam.ToString());

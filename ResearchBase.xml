@@ -4,7 +4,20 @@
         <name>ResearchBase</name>
     </assembly>
     <members>
+        <member name="T:ResearchBase.INameAndCopy">
+            <summary>
+            interface INameAndCopy
+            consist of:
+            string Name { get; set; }
+            object DeepCopy();
+            </summary>
+        </member>
         <member name="M:ResearchBase.Lab1.Run">
+            <summary>
+            done tasks from lab 1
+            </summary>
+        </member>
+        <member name="M:ResearchBase.Lab2.Run">
             <summary>
             done tasks from lab 1
             </summary>
@@ -13,6 +26,15 @@
             <summary>
             Paper, with fields title, author and date of publication
             </summary>
+        </member>
+        <member name="P:ResearchBase.Paper.Title">
+            <value>get/set title</value>
+        </member>
+        <member name="P:ResearchBase.Paper.Author">
+            <value>get/set author</value>
+        </member>
+        <member name="P:ResearchBase.Paper.PublicationDate">
+            <value>get/set date of publication</value>
         </member>
         <member name="M:ResearchBase.Paper.#ctor(System.String,ResearchBase.Person,System.DateTime)">
             <summary>
@@ -32,6 +54,12 @@
             convert fields of paper in string
             </summary>
             <returns>string with title, author and date of publication</returns>
+        </member>
+        <member name="M:ResearchBase.Paper.DeepCopy">
+            <summary>
+            Copy by value
+            </summary>
+            <returns>object with common fields as this</returns>
         </member>
         <member name="T:ResearchBase.Person">
             <summary>
@@ -77,35 +105,63 @@
             </summary>
             <returns>string with name and surname</returns>
         </member>
+        <member name="M:ResearchBase.Person.Equals(System.Object)">
+            <summary>
+            return true (so they are equal) if this and obj are common by value
+            </summary>
+            <param name="obj">compared obj - should be Person-type</param>
+            <returns>true if obj.type - Person and fields are common by value
+            else false </returns>
+        </member>
+        <member name="M:ResearchBase.Person.op_Equality(ResearchBase.Person,System.Object)">
+            <summary>
+            compare by equals
+            </summary>
+            <param name="left"> left value</param>
+            <param name="right"> right value </param>
+            <returns>left.Equals(right)</returns>
+        </member>
+        <member name="M:ResearchBase.Person.op_Inequality(ResearchBase.Person,System.Object)">
+            <summary>
+            compare by unequals
+            </summary>
+            <param name="left"> left value</param>
+            <param name="right"> right value </param>
+            <returns>!(left.Equals(right))</returns>
+        </member>
+        <member name="M:ResearchBase.Person.GetHashCode">
+            <summary>
+            override GetHashCode
+            </summary>
+            <returns>(name+surname).GetHashCode() + birthdate.GetHashCode()</returns>
+        </member>
+        <member name="M:ResearchBase.Person.DeepCopy">
+            <summary>
+            Copy by value
+            </summary>
+            <returns>object with common fields as this</returns>
+        </member>
         <member name="T:ResearchBase.ResearchTeam">
             <summary>
             Research team
             </summary>
         </member>
-        <member name="M:ResearchBase.ResearchTeam.#ctor(System.String,System.String,System.Int32,ResearchBase.TimeFrame)">
+        <member name="M:ResearchBase.ResearchTeam.#ctor(System.String,ResearchBase.Team,ResearchBase.TimeFrame)">
             <summary>
             Constructor
             </summary>
             <param name="_theme">theme of research</param>
-            <param name="_company">reseacher company</param>
-            <param name="_registerNumber">number of register</param>
+            <param name="_team">reseacher team</param>
             <param name="_timeFrame">time frame of research</param>
             <remarks>if _registerNumber not in (100000;999999] than set 100000</remarks>
         </member>
         <member name="M:ResearchBase.ResearchTeam.#ctor">
             <summary>
-            default constructor ResearchTeam("theme", "company", 1000000, TimeFrame.Year)
+            default constructor ResearchTeam("theme", new Team("company", 1000000), TimeFrame.Year)
             </summary>
         </member>
         <member name="P:ResearchBase.ResearchTeam.Theme">
             <value>get/set theme of research</value>
-        </member>
-        <member name="P:ResearchBase.ResearchTeam.Company">
-            <value>get/set researcher company</value>
-        </member>
-        <member name="P:ResearchBase.ResearchTeam.RegisterNumber">
-            <value>get/set theme of research</value>
-            <remarks>set only if in (100000;999999] </remarks>
         </member>
         <member name="P:ResearchBase.ResearchTeam.TimeFrame">
             <value>get/set time frame of research</value>
@@ -140,6 +196,109 @@
             convert some fields of research team in string
             </summary>
             <returns>string with theme, company, register number and time frame</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.DeepCopy">
+            <summary>
+            Copy by value
+            </summary>
+            <returns>object with common fields as this</returns>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.Persons">
+            <value>get/set persons</value>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.AddPersons(ResearchBase.Person[])">
+            <summary>
+            add some papers to current persons
+            </summary>
+            <param name="addPersons">persons that added</param>
+        </member>
+        <member name="P:ResearchBase.ResearchTeam.Team">
+            <value>get/set team</value>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.GetEnumerator">
+            <summary>
+            Enumerator for persons with non-publications
+            </summary>
+            <returns>person without publication</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.GetEnumerator(System.Int32)">
+            <summary>
+            Enumerator for publication which publicated in last n years
+            </summary>
+            <param name="n">count of last years</param>
+            <returns>publication in last n years</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.GetPersonsWithPubs">
+            <summary>
+            Enumerator for search persons who have publications
+            </summary>
+            <returns>persons with publications</returns>
+        </member>
+        <member name="T:ResearchBase.ResearchTeamEnumerator">
+            <summary>
+            Enumerator for search persons who have publications
+            </summary>
+        </member>
+        <member name="M:ResearchBase.Team.#ctor(System.String,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="_name">name of company</param>
+            <param name="_registerNumber">number of register</param>
+        </member>
+        <member name="M:ResearchBase.Team.#ctor">
+            <summary>
+            default constructor Team("company", 100000)
+            </summary>
+        </member>
+        <member name="P:ResearchBase.Team.Name">
+            <value>get/set name of company</value>
+        </member>
+        <member name="P:ResearchBase.Team.RegisterNumber">
+            <value>get/set register number of company</value>
+            <exception cref="T:System.ArgumentException">value must be > 100000</exception>
+        </member>
+        <member name="M:ResearchBase.Team.DeepCopy">
+            <summary>
+            Copy by value
+            </summary>
+            <returns>object with common fields as this</returns>
+        </member>
+        <member name="M:ResearchBase.Team.Equals(System.Object)">
+            <summary>
+            return true (so they are equal) if this and obj are common by value
+            </summary>
+            <param name="obj">compared obj - should be Team-type</param>
+            <returns>true if obj.type - Team and fields are common by value
+            else false </returns>
+        </member>
+        <member name="M:ResearchBase.Team.op_Equality(ResearchBase.Team,System.Object)">
+            <summary>
+            compare by equals
+            </summary>
+            <param name="left"> left value</param>
+            <param name="right"> right value </param>
+            <returns>left.Equals(right)</returns>
+        </member>
+        <member name="M:ResearchBase.Team.op_Inequality(ResearchBase.Team,System.Object)">
+            <summary>
+            compare by unequals
+            </summary>
+            <param name="left"> left value</param>
+            <param name="right"> right value </param>
+            <returns>!(left.Equals(right))</returns>
+        </member>
+        <member name="M:ResearchBase.Team.GetHashCode">
+            <summary>
+            override GetHashCode
+            </summary>
+            <returns>(name).GetHashCode() + registerNumber.GetHashCode();</returns>
+        </member>
+        <member name="M:ResearchBase.Team.ToString">
+            <summary>
+            convert fields of person in string
+            </summary>
+            <returns>string with name, surname and birthdate </returns>
         </member>
     </members>
 </doc>

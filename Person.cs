@@ -22,7 +22,7 @@ namespace ResearchBase
         {
             this.name = _name;
             this.surname = _surname;
-            if (birthdate > DateTime.MinValue && birthdate < DateTime.Now)
+            if (_birthdate > DateTime.MinValue && _birthdate < DateTime.Now)
                 this.birthdate = _birthdate;
             else this.birthdate = DateTime.MinValue;
         }
@@ -57,9 +57,9 @@ namespace ResearchBase
         {
             get { return birthdate; }
             set
-            { 
+            {
                 if (value > DateTime.MinValue && value < DateTime.Now)
-                    birthdate = value; 
+                    birthdate = value;
             }
         }
 
@@ -67,10 +67,10 @@ namespace ResearchBase
         public int BirthdayYear
         {
             get { return birthdate.Year; }
-            set 
-            { 
+            set
+            {
                 if (value > DateTime.MinValue.Year && value < DateTime.Now.Year)
-                    birthdate = new DateTime(value, birthdate.Month, birthdate.Day); 
+                    birthdate = new DateTime(value, birthdate.Month, birthdate.Day);
             }
         }
 
@@ -91,5 +91,61 @@ namespace ResearchBase
         {
             return surname + " " + name;
         }
+
+        /// <summary>
+        /// return true (so they are equal) if this and obj are common by value
+        /// </summary>
+        /// <param name="obj">compared obj - should be Person-type</param>
+        /// <returns>true if obj.type - Person and fields are common by value
+        /// else false </returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is Person person)
+                return (name == person.Name) && (surname == person.surname) && (birthdate == person.birthdate);
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// compare by equals
+        /// </summary>
+        /// <param name="left"> left value</param>
+        /// <param name="right"> right value </param>
+        /// <returns>left.Equals(right)</returns>
+        public static bool operator ==(Person left, object right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// compare by unequals
+        /// </summary>
+        /// <param name="left"> left value</param>
+        /// <param name="right"> right value </param>
+        /// <returns>!(left.Equals(right))</returns>
+        public static bool operator !=(Person left, object right)
+        {
+            return !(left.Equals(right));
+        }
+
+        /// <summary>
+        /// override GetHashCode
+        /// </summary>
+        /// <returns>(name+surname).GetHashCode() + birthdate.GetHashCode()</returns>
+        public override int GetHashCode()
+        {
+            return (name+surname).GetHashCode() + birthdate.GetHashCode();
+        }
+
+        /// <summary>
+        /// Copy by value
+        /// </summary>
+        /// <returns>object with common fields as this</returns>
+        public virtual object DeepCopy()
+        {
+            return new Person(name, surname, birthdate);
+        }
+
+
     }
 }
