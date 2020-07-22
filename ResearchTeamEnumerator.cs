@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ResearchBase
 {
@@ -8,9 +9,9 @@ namespace ResearchBase
     /// </summary>
     class ResearchTeamEnumerator: IEnumerator
     {
-        private ArrayList persons;
-        private ArrayList papers;
-        public ResearchTeamEnumerator(ArrayList persons, ArrayList papers)
+        private readonly List<Person> persons;
+        private readonly List<Paper> papers;
+        public ResearchTeamEnumerator(List<Person> persons, List<Paper> papers)
         {
             this.persons = persons;
             this.papers = papers;

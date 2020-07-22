@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ResearchBase
 {
     /// <summary>
     /// Paper, with fields title, author and date of publication
     /// </summary>
-    class Paper
+    class Paper: IComparable, IComparer<Paper>
     {
         /// <value>get/set title</value>
         public string Title { get; set; }
@@ -54,6 +55,26 @@ namespace ResearchBase
         {
             return new Paper(Title, (Person)Author.DeepCopy() ,PublicationDate);
         }
+
+        /// <summary>
+        /// compare by publication date
+        /// </summary>
+        /// <param name="obj">compared object</param>
+        /// <exception cref="System.Exception">Невозможно сравнить два объекта</exception>
+        /// <returns>this.PublicationDate.CompareTo(obj.PublicationDate)</returns>
+        public int CompareTo(object obj)
+        {
+            if (obj is Paper paper)
+                return this.PublicationDate.CompareTo(paper.PublicationDate);
+            else
+                throw new Exception("Невозможно сравнить два объекта");
+        }
+
+        public int Compare(Paper p1, Paper p2)
+        {
+            return p1.Title.CompareTo(p2.Title);
+        }
+    
 
     }
 }

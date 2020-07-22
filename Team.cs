@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ResearchBase
 {
-    class Team: INameAndCopy
+    class Team : INameAndCopy
     {
         protected string name;
         protected int registerNumber;
@@ -44,7 +44,7 @@ namespace ResearchBase
             get { return registerNumber; }
             set
             {
-                if(value <= 100000)
+                if (value <= 100000)
                 {
                     throw new ArgumentException("value less or equals 100000");
                 }
@@ -75,7 +75,7 @@ namespace ResearchBase
             if (obj is Team team)
                 return (name == team.name) && (registerNumber == team.registerNumber);
             else
-                return false;       
+                return false;
         }
 
         /// <summary>
@@ -117,5 +117,6 @@ namespace ResearchBase
         {
             return name + " " + registerNumber;
         }
+
     }
 }

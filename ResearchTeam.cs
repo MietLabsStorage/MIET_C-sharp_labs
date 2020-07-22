@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ResearchBase
 {
@@ -10,8 +11,8 @@ namespace ResearchBase
     {
         private string theme;
         private TimeFrame timeFrame;
-        private ArrayList papers;
-        private ArrayList persons;
+        private List<Paper> papers;
+        private List<Person> persons;
 
         /// <summary>
         /// Constructor
@@ -24,8 +25,8 @@ namespace ResearchBase
         {
             this.theme = _theme;
             this.timeFrame = _timeFrame;
-            this.papers = new ArrayList();
-            this.persons = new ArrayList();
+            this.papers = new List<Paper>();
+            this.persons = new List<Person>();
         }
 
         /// <summary>
@@ -35,8 +36,8 @@ namespace ResearchBase
         {
             this.theme = "theme";
             this.timeFrame = TimeFrame.Year;
-            this.papers = new ArrayList();
-            this.persons = new ArrayList();
+            this.papers = new List<Paper>();
+            this.persons = new List<Person>();
         }
 
         /// <value>get/set theme of research</value>
@@ -54,7 +55,7 @@ namespace ResearchBase
         }
 
         /// <value>get/set papers</value>
-        public ArrayList Papers 
+        public List<Paper> Papers 
         { 
             get { return papers; }
             set 
@@ -103,7 +104,7 @@ namespace ResearchBase
         /// add some papers to current papers
         /// </summary>
         /// <param name="addPapers">papers that added</param>
-        public ArrayList AddPapers(params Paper[] addPapers)
+        public List<Paper> AddPapers(params Paper[] addPapers)
         {
             if(addPapers != null)
                 foreach (Paper value in addPapers)
@@ -162,7 +163,7 @@ namespace ResearchBase
         }
 
         /// <value>get/set persons</value>
-        public ArrayList Persons
+        public List<Person> Persons
         {
             get { return persons; }
             set
@@ -179,7 +180,7 @@ namespace ResearchBase
         /// add some papers to current persons
         /// </summary>
         /// <param name="addPersons">persons that added</param>
-        public ArrayList AddPersons(params Person[] addPersons)
+        public List<Person> AddPersons(params Person[] addPersons)
         {
             if(addPersons!= null)
                 foreach (Person value in addPersons)
@@ -284,6 +285,29 @@ namespace ResearchBase
             }
         }
 
+        /// <summary>
+        /// sort by publication date
+        /// </summary>
+        public void SortByDate()
+        {
+            papers.Sort();
+        }
+
+        /// <summary>
+        /// sort by title
+        /// </summary>
+        public void SortByName()
+        {
+            papers.Sort(new Paper());
+        }
+
+        /// <summary>
+        /// sort by author's surname
+        /// </summary>
+        public void SortByAuthorSnm()
+        {
+            papers.Sort(new PaperIComparer());
+        }
 
     }
 }
