@@ -11,7 +11,7 @@ namespace ResearchBase
     class ResearchTeamCollection<TKey>
     {
         private Dictionary<TKey, ResearchTeam> researchTeamCollection;
-        private KeySelector<TKey> keySelector;
+        private readonly KeySelector<TKey> keySelector;
 
         /// <summary>
         /// Constructor
@@ -115,6 +115,39 @@ namespace ResearchBase
                 return researchTeamCollection.GroupBy(rt => rt.Value.TimeFrame);
             }
         }
+
+        public string CollectionName { get; set; }
+
+        public event ResearchTeamsChangedHandler<TKey> ResearchTeamsChanged;
+
+        public bool Remove(ResearchTeam rt)
+        {
+            TKey key = keySelector(rt);
+            if (researchTeamCollection.ContainsKey(key))
+            {
+                researchTeamCollection.Remove(key);
+                ResearchTeamsChanged?.Invoke(this, new ResearchTeamsChangedEventArgs<TKey>(CollectionName, Revision.Remove, "", rt.RegisterNumber));
+                return true;
+            }
+            return false;
+        }
+
+        public bool Replace(ResearchTeam rtold, ResearchTeam rtnew)
+        {
+            TKey rtoldKey = keySelector(rtold);
+            TKey rtnewKey = keySelector(rtnew);
+            researchTeamCollection.Add(rtnewKey, rtnew);
+            if (researchTeamCollection.ContainsKey(rtoldKey))
+            {
+                researchTeamCollection[rtoldKey] = researchTeamCollection[rtnewKey];
+                researchTeamCollection.Remove(rtnewKey);
+
+                ResearchTeamsChanged?.Invoke(this, new ResearchTeamsChangedEventArgs<TKey>(CollectionName, Revision.Replace, "", rtold.RegisterNumber));
+                return true;
+            }
+            return false;
+        }
+
 
     }
 }

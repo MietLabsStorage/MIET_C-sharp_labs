@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ResearchBase
 {
@@ -11,8 +12,8 @@ namespace ResearchBase
     {
         private string theme;
         private TimeFrame timeFrame;
-        private List<Paper> papers;
-        private List<Person> persons;
+        private readonly List<Paper> papers;
+        private readonly List<Person> persons;
 
         /// <summary>
         /// Constructor
@@ -44,14 +45,22 @@ namespace ResearchBase
         public string Theme 
         { 
             get { return theme; } 
-            set { theme = value; }
+            set 
+            {
+                theme = value;
+                OnPropertyChanged("Research.Theme");
+            }
         }
 
         /// <value>get/set time frame of research</value>
         public TimeFrame TimeFrame 
         {
             get { return timeFrame; }
-            set { timeFrame = value; }
+            set 
+            { 
+                timeFrame = value;
+                OnPropertyChanged("Research.TimeFrame");
+            }
         }
 
         /// <value>get/set papers</value>
@@ -307,6 +316,13 @@ namespace ResearchBase
         public void SortByAuthorSnm()
         {
             papers.Sort(new PaperIComparer());
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
