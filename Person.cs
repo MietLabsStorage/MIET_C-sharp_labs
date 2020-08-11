@@ -5,6 +5,7 @@ namespace ResearchBase
     /// <summary>
     /// Person, with fields name, surname and birthdate
     /// </summary>
+    [Serializable]
     class Person
     {
         private string name;

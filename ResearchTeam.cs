@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ResearchBase
 {
     /// <summary>
     /// Research team
     /// </summary>
+    [Serializable]
     class ResearchTeam: Team, INameAndCopy, IEnumerable
     {
         private string theme;
@@ -325,5 +328,98 @@ namespace ResearchBase
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public ResearchTeam DeepCopy(bool serialize)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream
+            {
+                Position = 0
+            };
+            formatter.Serialize(ms, this);
+            ms.Position = 0;
+            ResearchTeam rt = (ResearchTeam)formatter.Deserialize(ms);
+            ms.Close();
+            return rt;
+        }
+
+        public bool Save(string filename)
+        {
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream(filename + ".dat", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, this);
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// bool Load(string filename) для инициализации объекта данными из файла с помощью десериализации;
+        /// </summary>
+        public bool Load(string filename)
+        {
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream(filename + ".dat", FileMode.OpenOrCreate))
+                {
+                    ResearchTeam rt = (ResearchTeam)formatter.Deserialize(fs);
+                    this.theme = rt.theme;
+                    this.name = rt.name;
+                    this.registerNumber = rt.registerNumber;
+                    this.timeFrame = rt.timeFrame;
+                    foreach(Paper paper in rt.papers)
+                    {
+                        this.papers.Add(paper);
+                    }
+                    foreach(Person person in rt.persons)
+                    {
+                        this.persons.Add(person);
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AddFromConsole()
+        {
+            Console.WriteLine("Write new Paper object in format:");
+            Console.WriteLine("pubName authorName authorSurname authorBirthDay.authorBirthMont.authorBirthYear pubDay.pubMonth.pubYear");
+            string str;
+            str = Console.ReadLine();
+            string[] dat = str.Split(new char[] { ' ', '.' });
+            try
+            {
+                this.AddPapers(new Paper(dat[0], new Person(dat[1], dat[2], new DateTime(Convert.ToInt32(dat[5]), Convert.ToInt32(dat[4]), Convert.ToInt32(dat[3]))), new DateTime(Convert.ToInt32(dat[8]), Convert.ToInt32(dat[7]), Convert.ToInt32(dat[6]))));
+                return true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Error writing");
+                return false;
+            }
+        }
+
+        static public bool Save(string filename, ResearchTeam obj)
+        {
+            return obj.Save(filename);
+        }
+
+        static public bool Load(string filename, ResearchTeam obj)
+        {
+            return obj.Load(filename);
+        }
     }
 }

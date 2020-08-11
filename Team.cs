@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ResearchBase
 {
+    [Serializable]
     class Team : INameAndCopy
     {
         protected string name;

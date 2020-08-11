@@ -262,6 +262,11 @@
             sort by author's surname
             </summary>
         </member>
+        <member name="M:ResearchBase.ResearchTeam.Load(System.String)">
+            <summary>
+            bool Load(string filename) для инициализации объекта данными из файла с помощью десериализации;
+            </summary>
+        </member>
         <member name="T:ResearchBase.ResearchTeamCollection`1">
             <summary>
             Dictionary collection of research team

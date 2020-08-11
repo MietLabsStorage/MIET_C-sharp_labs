@@ -6,6 +6,7 @@ namespace ResearchBase
     /// <summary>
     /// Paper, with fields title, author and date of publication
     /// </summary>
+    [Serializable]
     class Paper: IComparable, IComparer<Paper>
     {
         /// <value>get/set title</value>
