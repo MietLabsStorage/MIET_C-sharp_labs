@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ResearchBase
 {
     /// <summary>
-    /// class for realise IComparer^Paper^ to compare vy author's surname
+    /// class for realise IComparer^Paper^ to compare by author's surname
     /// </summary>
     class PaperIComparer : IComparer<Paper>
     {

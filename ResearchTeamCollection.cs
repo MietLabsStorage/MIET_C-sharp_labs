@@ -116,10 +116,16 @@ namespace ResearchBase
             }
         }
 
+        ///<value> get/set collection name</value>
         public string CollectionName { get; set; }
 
         public event ResearchTeamsChangedHandler<TKey> ResearchTeamsChanged;
 
+        /// <summary>
+        /// remove from collection
+        /// </summary>
+        /// <param name="rt">removing object</param>
+        /// <returns>true if succes else false</returns>
         public bool Remove(ResearchTeam rt)
         {
             TKey key = keySelector(rt);
@@ -132,6 +138,12 @@ namespace ResearchBase
             return false;
         }
 
+        /// <summary>
+        /// replace in collection
+        /// </summary>
+        /// <param name="rtold">that will remove</param>
+        /// <param name="rtnew">that will change rtold</param>
+        /// <returns>true if succes else false</returns>
         public bool Replace(ResearchTeam rtold, ResearchTeam rtnew)
         {
             TKey rtoldKey = keySelector(rtold);

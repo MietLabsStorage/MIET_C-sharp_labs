@@ -267,6 +267,10 @@ namespace ResearchBase
             ie.Reset(); 
         }
 
+        /// <summary>
+        /// Enumerator for search persons who have more than one publications
+        /// </summary>
+        /// <returns>persons who have more than one publications</returns>
         public IEnumerable GetPersonsWithMoreOnePubs()
         {
             for (int i = 0; i < persons.Count; i++)
@@ -286,11 +290,15 @@ namespace ResearchBase
             }
         }
 
+        /// <summary>
+        /// Enumerator for search persons who have publications in this year
+        /// </summary>
+        /// <returns>persons who have publications in this year</returns>
         public IEnumerable GetThisYearPubs()
         {
             for (int i = 0; i < papers.Count; i++)
             {
-                if ((DateTime.Now.Year - ((Paper)papers[i]).PublicationDate.Year) < 1)
+                if ((DateTime.Now.Year == ((Paper)papers[i]).PublicationDate.Year))
                 {
                     yield return papers[i];
                 }
@@ -328,30 +336,44 @@ namespace ResearchBase
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// object with common fields as this
+        /// </summary>
+        /// <param name="serialize">if true copy with serialize also with DeepCopy()</param>
+        /// <returns>object with common fields as this</returns>
         public ResearchTeam DeepCopy(bool serialize)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream
+            if (serialize)
             {
-                Position = 0
-            };
-            formatter.Serialize(ms, this);
-            ms.Position = 0;
-            ResearchTeam rt = (ResearchTeam)formatter.Deserialize(ms);
-            ms.Close();
-            return rt;
+                BinaryFormatter formatter = new BinaryFormatter();
+                MemoryStream ms = new MemoryStream
+                {
+                    Position = 0
+                };
+                formatter.Serialize(ms, this);
+                ms.Position = 0;
+                ResearchTeam rt = (ResearchTeam)formatter.Deserialize(ms);
+                ms.Close();
+                return rt;
+            }
+            else
+                return (ResearchTeam)DeepCopy();
         }
 
+        /// <summary>
+        /// Save by serialize
+        /// </summary>
+        /// <param name="filename">filename (without filename extension) for saving</param>
+        /// <returns>true if succes else false</returns>
         public bool Save(string filename)
         {
             try
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                using (FileStream fs = new FileStream(filename + ".dat", FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(filename + Program.filenameExtension, FileMode.OpenOrCreate))
                 {
                     formatter.Serialize(fs, this);
                 }
-
                 return true;
             }
             catch (Exception)
@@ -361,8 +383,10 @@ namespace ResearchBase
         }
 
         /// <summary>
-        /// bool Load(string filename) для инициализации объекта данными из файла с помощью десериализации;
+        /// Load by serialize
         /// </summary>
+        /// <param name="filename">filename (without filename extension) for loading</param>
+        /// <returns>true if succes else false</returns>
         public bool Load(string filename)
         {
             try
@@ -393,6 +417,10 @@ namespace ResearchBase
             }
         }
 
+        /// <summary>
+        /// add paper with UI
+        /// </summary>
+        /// <returns></returns>
         public bool AddFromConsole()
         {
             Console.WriteLine("Write new Paper object in format:");
@@ -412,11 +440,23 @@ namespace ResearchBase
             }
         }
 
+        /// <summary>
+        /// Save by serialize
+        /// </summary>
+        /// <param name="filename">filename (without filename extension) for saving</param>
+        /// <param name="obj">saving object</param>
+        /// <returns>true if succes else false</returns>
         static public bool Save(string filename, ResearchTeam obj)
         {
             return obj.Save(filename);
         }
 
+        /// <summary>
+        /// Load by serialize
+        /// </summary>
+        /// <param name="filename">filename (without filename extension) for loading</param>
+        /// <param name="obj">loading object</param>
+        /// <returns>true if succes else false</returns>
         static public bool Load(string filename, ResearchTeam obj)
         {
             return obj.Load(filename);

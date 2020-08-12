@@ -71,6 +71,12 @@ namespace ResearchBase
                 throw new Exception("Невозможно сравнить два объекта");
         }
 
+        /// <summary>
+        /// compare by publication title
+        /// </summary>
+        /// <param name="p1">first compared object</param>
+        /// <param name="p2">second compared object</param>
+        /// <returns></returns>
         public int Compare(Paper p1, Paper p2)
         {
             return p1.Title.CompareTo(p2.Title);

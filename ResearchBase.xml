@@ -69,9 +69,17 @@
             <exception cref="T:System.Exception">Невозможно сравнить два объекта</exception>
             <returns>this.PublicationDate.CompareTo(obj.PublicationDate)</returns>
         </member>
+        <member name="M:ResearchBase.Paper.Compare(ResearchBase.Paper,ResearchBase.Paper)">
+            <summary>
+            compare by publication title
+            </summary>
+            <param name="p1">first compared object</param>
+            <param name="p2">second compared object</param>
+            <returns></returns>
+        </member>
         <member name="T:ResearchBase.PaperIComparer">
             <summary>
-            class for realise IComparer^Paper^ to compare vy author's surname
+            class for realise IComparer^Paper^ to compare by author's surname
             </summary>
         </member>
         <member name="T:ResearchBase.Person">
@@ -86,7 +94,8 @@
             <param name="_name">name of person</param>
             <param name="_surname">surname of person</param>
             <param name="_birthdate">birthdate of person</param>
-            <remarks>if birthdate not in (DateTime.MinValue; DateTime.Now] than set DateTime.MinValue </remarks>
+            <exception cref="T:System.Exception">if !(_birthdate more DateTime.MinValue and _birthdate less DateTime.Now) 
+            throw new Exception("uncorect value of birthdate")</exception>
         </member>
         <member name="M:ResearchBase.Person.#ctor">
             <summary>
@@ -101,10 +110,13 @@
         </member>
         <member name="P:ResearchBase.Person.Birthdate">
             <value>get/set birthdate</value>
-            <remarks>set only if in (DateTime.MinValue; DateTime.Now] </remarks>
+            <exception cref="T:System.Exception">if !(value more DateTime.MinValue and value less DateTime.Now) 
+            throw new Exception("uncorect value")</exception>
         </member>
         <member name="P:ResearchBase.Person.BirthdayYear">
             <value>get/set birthyear</value>
+            /// <exception cref="T:System.Exception">if !(value more DateTime.MinValue.Year and value less DateTime.Now.Year) 
+            throw new Exception("uncorect value")</exception>
         </member>
         <member name="M:ResearchBase.Person.ToString">
             <summary>
@@ -247,6 +259,18 @@
             </summary>
             <returns>persons with publications</returns>
         </member>
+        <member name="M:ResearchBase.ResearchTeam.GetPersonsWithMoreOnePubs">
+            <summary>
+            Enumerator for search persons who have more than one publications
+            </summary>
+            <returns>persons who have more than one publications</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.GetThisYearPubs">
+            <summary>
+            Enumerator for search persons who have publications in this year
+            </summary>
+            <returns>persons who have publications in this year</returns>
+        </member>
         <member name="M:ResearchBase.ResearchTeam.SortByDate">
             <summary>
             sort by publication date
@@ -262,10 +286,48 @@
             sort by author's surname
             </summary>
         </member>
+        <member name="M:ResearchBase.ResearchTeam.DeepCopy(System.Boolean)">
+            <summary>
+            object with common fields as this
+            </summary>
+            <param name="serialize">if true copy with serialize also with DeepCopy()</param>
+            <returns>object with common fields as this</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.Save(System.String)">
+            <summary>
+            Save by serialize
+            </summary>
+            <param name="filename">filename (without filename extension) for saving</param>
+            <returns>true if succes else false</returns>
+        </member>
         <member name="M:ResearchBase.ResearchTeam.Load(System.String)">
             <summary>
-            bool Load(string filename) для инициализации объекта данными из файла с помощью десериализации;
+            Load by serialize
             </summary>
+            <param name="filename">filename (without filename extension) for loading</param>
+            <returns>true if succes else false</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.AddFromConsole">
+            <summary>
+            add paper with UI
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.Save(System.String,ResearchBase.ResearchTeam)">
+            <summary>
+            Save by serialize
+            </summary>
+            <param name="filename">filename (without filename extension) for saving</param>
+            <param name="obj">saving object</param>
+            <returns>true if succes else false</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeam.Load(System.String,ResearchBase.ResearchTeam)">
+            <summary>
+            Load by serialize
+            </summary>
+            <param name="filename">filename (without filename extension) for loading</param>
+            <param name="obj">loading object</param>
+            <returns>true if succes else false</returns>
         </member>
         <member name="T:ResearchBase.ResearchTeamCollection`1">
             <summary>
@@ -315,6 +377,24 @@
         <member name="P:ResearchBase.ResearchTeamCollection`1.GroupByTimeFrame">
             <value>get groups by TimeFrame</value>
         </member>
+        <member name="P:ResearchBase.ResearchTeamCollection`1.CollectionName">
+            <value> get/set collection name</value>
+        </member>
+        <member name="M:ResearchBase.ResearchTeamCollection`1.Remove(ResearchBase.ResearchTeam)">
+            <summary>
+            remove from collection
+            </summary>
+            <param name="rt">removing object</param>
+            <returns>true if succes else false</returns>
+        </member>
+        <member name="M:ResearchBase.ResearchTeamCollection`1.Replace(ResearchBase.ResearchTeam,ResearchBase.ResearchTeam)">
+            <summary>
+            replace in collection
+            </summary>
+            <param name="rtold">that will remove</param>
+            <param name="rtnew">that will change rtold</param>
+            <returns>true if succes else false</returns>
+        </member>
         <member name="T:ResearchBase.ResearchTeamEnumerator">
             <summary>
             Enumerator for search persons who have publications
@@ -326,6 +406,8 @@
             </summary>
             <param name="_name">name of company</param>
             <param name="_registerNumber">number of register</param>
+            <exception cref="T:System.Exception"> if !(_registerNumber more 100000 and  _registerNumber less 999999) 
+            throw new Exception("uncorect value of register number")</exception>
         </member>
         <member name="M:ResearchBase.Team.#ctor">
             <summary>

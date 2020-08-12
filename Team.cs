@@ -15,11 +15,14 @@ namespace ResearchBase
         /// </summary>
         /// <param name="_name">name of company</param>
         /// <param name="_registerNumber">number of register</param>
+        /// <exception cref="Exception"> if !(_registerNumber more 100000 and  _registerNumber less 999999) 
+        /// throw new Exception("uncorect value of register number")</exception>
         public Team(string _name, int _registerNumber)
         {
             this.name = _name;
             if (_registerNumber > 100000 && _registerNumber <= 999999)
                 this.registerNumber = _registerNumber;
+            else throw new Exception("uncorect value of register number");
         }
 
         /// <summary>

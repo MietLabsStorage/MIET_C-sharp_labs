@@ -18,14 +18,15 @@ namespace ResearchBase
         /// <param name="_name">name of person</param>
         /// <param name="_surname">surname of person</param>
         /// <param name="_birthdate">birthdate of person</param>
-        /// <remarks>if birthdate not in (DateTime.MinValue; DateTime.Now] than set DateTime.MinValue </remarks>
+        /// <exception cref="Exception">if !(_birthdate more DateTime.MinValue and _birthdate less DateTime.Now) 
+        /// throw new Exception("uncorect value of birthdate")</exception>
         public Person(string _name, string _surname, DateTime _birthdate)
         {
             this.name = _name;
             this.surname = _surname;
             if (_birthdate > DateTime.MinValue && _birthdate < DateTime.Now)
                 this.birthdate = _birthdate;
-            else this.birthdate = DateTime.MinValue;
+            else throw new Exception("uncorect value of birthdate");
         }
 
         /// <summary>
@@ -53,7 +54,8 @@ namespace ResearchBase
         }
 
         /// <value>get/set birthdate</value>
-        /// <remarks>set only if in (DateTime.MinValue; DateTime.Now] </remarks>
+        /// <exception cref="Exception">if !(value more DateTime.MinValue and value less DateTime.Now) 
+        /// throw new Exception("uncorect value")</exception>
         public DateTime Birthdate
         {
             get { return birthdate; }
@@ -61,10 +63,13 @@ namespace ResearchBase
             {
                 if (value > DateTime.MinValue && value < DateTime.Now)
                     birthdate = value;
+                else throw new Exception("uncorect value");
             }
         }
 
         /// <value>get/set birthyear</value>
+        /// /// <exception cref="Exception">if !(value more DateTime.MinValue.Year and value less DateTime.Now.Year) 
+        /// throw new Exception("uncorect value")</exception>
         public int BirthdayYear
         {
             get { return birthdate.Year; }
@@ -72,6 +77,7 @@ namespace ResearchBase
             {
                 if (value > DateTime.MinValue.Year && value < DateTime.Now.Year)
                     birthdate = new DateTime(value, birthdate.Month, birthdate.Day);
+                else throw new Exception("uncorect value");
             }
         }
 
